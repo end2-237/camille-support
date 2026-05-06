@@ -9,5 +9,4 @@ services:
       GEMINI_API_KEY: ${GEMINI_API_KEY}
       EVOLUTION_URL: ${EVOLUTION_URL}
       EVOLUTION_API_KEY: ${EVOLUTION_API_KEY}
-      REDIS_URL: ${REDIS_URL}
       SYSTEM_PROMPT: ${SYSTEM_PROMPT:-"Tu es un agent de support client. Réponds en français, de façon concise et professionnelle."}

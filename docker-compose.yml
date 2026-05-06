@@ -48,7 +48,7 @@ services:
       - "3000:3000"
     environment:
       PORT: 3000
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
       EVOLUTION_URL: http://evolution:8080
       EVOLUTION_API_KEY: ${EVOLUTION_API_KEY}
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0

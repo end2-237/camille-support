@@ -9,15 +9,20 @@ services:
       AUTHENTICATION_TYPE: apikey
       AUTHENTICATION_API_KEY: ${EVOLUTION_API_KEY}
 
-      DATABASE_ENABLED: "true"
-      DATABASE_PROVIDER: postgresql
+      DATABASE_PROVIDER: "postgresql"
       DATABASE_CONNECTION_URI: ${SUPABASE_DB_URL}
       DATABASE_CONNECTION_CLIENT_NAME: evolution
+
       DATABASE_SAVE_DATA_INSTANCE: "true"
       DATABASE_SAVE_DATA_NEW_MESSAGE: "true"
       DATABASE_SAVE_MESSAGE_UPDATE: "true"
       DATABASE_SAVE_DATA_CONTACTS: "true"
       DATABASE_SAVE_DATA_CHATS: "true"
+      DATABASE_SAVE_DATA_LABELS: "true"
+      DATABASE_SAVE_DATA_HISTORIC: "true"
+      DATABASE_SAVE_IS_ON_WHATSAPP: "true"
+      DATABASE_SAVE_IS_ON_WHATSAPP_DAYS: "7"
+      DATABASE_DELETE_MESSAGE: "true"
 
       WEBHOOK_GLOBAL_URL: ${BACKEND_URL}/webhook
       WEBHOOK_GLOBAL_ENABLED: "true"
@@ -25,6 +30,8 @@ services:
 
       QRCODE_LIMIT: "30"
       QRCODE_EXPIRATION_TIME: "30"
+      DEL_INSTANCE: "false"
+      CORS_ORIGIN: "*"
     volumes:
       - evolution_data:/evolution/instances
 

@@ -33,7 +33,7 @@ services:
       QRCODE_EXPIRATION_TIME: "30"
       DEL_INSTANCE: "false"
       CORS_ORIGIN: "*"
-    entrypoint: ["/bin/bash", "-c", "printf 'DATABASE_URL=%s\\nDATABASE_CONNECTION_URI=%s\\nDATABASE_PROVIDER=%s\\nSERVER_TYPE=http\\nSERVER_PORT=8080\\n' \"$DATABASE_URL\" \"$DATABASE_CONNECTION_URI\" \"$DATABASE_PROVIDER\" > /evolution/.env && . ./Docker/scripts/deploy_database.sh && npm run start:prod"]
+    entrypoint: ["/bin/bash", "-c", "printf 'DATABASE_URL=%s\\nDATABASE_CONNECTION_URI=%s\\nDATABASE_PROVIDER=%s\\nSERVER_TYPE=http\\nSERVER_PORT=8080\\n' \"$DATABASE_URL\" \"$DATABASE_CONNECTION_URI\" \"$DATABASE_PROVIDER\" > /evolution/.env && (. ./Docker/scripts/deploy_database.sh 2>/dev/null || true) && npm run start:prod"]
     volumes:
       - evolution_data:/evolution/instances
 

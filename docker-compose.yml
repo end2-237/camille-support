@@ -33,6 +33,7 @@ services:
       QRCODE_EXPIRATION_TIME: "30"
       DEL_INSTANCE: "false"
       CORS_ORIGIN: "*"
+    entrypoint: ["/bin/bash", "-c", "rm -f /evolution/.env && . ./Docker/scripts/deploy_database.sh && npm run start:prod"]
     volumes:
       - evolution_data:/evolution/instances
 

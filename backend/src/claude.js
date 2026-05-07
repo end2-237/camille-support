@@ -7,7 +7,7 @@ const SYSTEM_PROMPT =
   "Tu es un agent de support client. Réponds en français, de façon concise et professionnelle.";
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
+  model: "gemini-2.0-flash-lite",
   systemInstruction: SYSTEM_PROMPT,
 });
 

@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cours Réseaux WAN – Résumé Complet & Évaluation</title>
+<style>
+  @page { margin: 2cm; size: A4; }
+  body { font-family: Arial, sans-serif; font-size: 11pt; color: #222; line-height: 1.5; }
+  h1 { font-size: 22pt; color: #003366; text-align: center; border-bottom: 3px solid #003366; padding-bottom: 8px; margin-top: 30px; }
+  h2 { font-size: 16pt; color: #005599; border-left: 5px solid #005599; padding-left: 10px; margin-top: 25px; page-break-before: always; }
+  h2:first-of-type { page-break-before: avoid; }
+  h3 { font-size: 13pt; color: #0077bb; margin-top: 18px; }
+  h4 { font-size: 11pt; color: #333; margin-top: 12px; font-style: italic; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 5px; font-family: "Courier New", monospace; font-size: 9.5pt; white-space: pre-wrap; word-wrap: break-word; }
+  code { background: #f0f0f0; color: #c00; padding: 1px 4px; border-radius: 3px; font-family: "Courier New", monospace; font-size: 9.5pt; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10pt; }
+  th { background: #003366; color: white; padding: 7px 10px; text-align: left; }
+  td { border: 1px solid #ccc; padding: 6px 10px; }
+  tr:nth-child(even) td { background: #f5f8ff; }
+  .tip { background: #e7f5e7; border-left: 4px solid #2a9d2a; padding: 8px 12px; margin: 10px 0; border-radius: 4px; }
+  .warning { background: #fff3cd; border-left: 4px solid #e6a817; padding: 8px 12px; margin: 10px 0; border-radius: 4px; }
+  .eval-box { background: #f0f4ff; border: 2px solid #003366; padding: 15px; border-radius: 8px; margin: 15px 0; }
+  .qcm { margin: 10px 0; }
+  .qcm p { font-weight: bold; }
+  .qcm ul { list-style: none; padding-left: 10px; }
+  .answer { color: #006600; font-weight: bold; }
+  .cover { text-align: center; margin-top: 80px; }
+  .cover h1 { font-size: 28pt; border: none; }
+  .cover .subtitle { font-size: 14pt; color: #555; margin: 10px 0; }
+  .cover .info { font-size: 12pt; margin-top: 40px; color: #333; }
+  ul, ol { padding-left: 20px; }
+  li { margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<!-- PAGE DE COUVERTURE -->
+<div class="cover">
+  <h1>RÉSEAUX WAN<br/>CCNA – Connecting Networks v6.0</h1>
+  <div class="subtitle">Document de Révision Complet</div>
+  <div class="subtitle">Théorie · Pratique Cisco · Évaluation</div>
+  <div class="info">
+    Chapitres 1 à 8 | Cours CCNA Routing &amp; Switching<br/>
+    Année 2025–2026
+  </div>
+</div>
+
+<!-- TABLE DES MATIÈRES -->
+<h2>TABLE DES MATIÈRES</h2>
+<ol>
+  <li>Chapitre 1 – Concepts du WAN</li>
+  <li>Chapitre 2 – Connexions Point à Point (HDLC / PPP)</li>
+  <li>Chapitre 3 – Connexions des Succursales (DSL, PPPoE, VPN, GRE, BGP)</li>
+  <li>Chapitre 4 – Listes de Contrôle d'Accès (ACL)</li>
+  <li>Chapitre 5 – Sécurité et Surveillance du Réseau (SNMP, SPAN)</li>
+  <li>Chapitre 6 – Qualité de Service (QoS)</li>
+  <li>Chapitre 7 – Évolution du Réseau (IoT, Cloud, SDN)</li>
+  <li>Chapitre 8 – Dépannage du Réseau</li>
+  <li>ÉVALUATION THÉORIQUE (QCM + Questions ouvertes)</li>
+  <li>ÉVALUATION PRATIQUE (Scénarios Cisco)</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 1 – CONCEPTS DU WAN</h2>
+
+<h3>1.1 Pourquoi un WAN ?</h3>
+<ul>
+  <li>Un <strong>WAN (Wide Area Network)</strong> interconnecte des LANs distants géographiquement.</li>
+  <li>Le WAN est détenu par un <strong>opérateur télécom</strong> ; le LAN est détenu par l'entreprise.</li>
+  <li>L'entreprise paye l'opérateur pour le transport de données, voix et vidéo.</li>
+  <li>Sans WAN, les LANs restent des îlots isolés.</li>
+</ul>
+
+<h3>1.2 Topologies WAN</h3>
+<table>
+  <tr><th>Topologie</th><th>Description</th><th>Avantages / Inconvénients</th></tr>
+  <tr><td>Point à point</td><td>Circuit dédié entre 2 sites</td><td>Simple, fiable – coûteux</td></tr>
+  <tr><td>Étoile (Hub &amp; Spoke)</td><td>Sites rattachés à un concentrateur central</td><td>Économique – point de défaillance unique</td></tr>
+  <tr><td>Maillage global (Full Mesh)</td><td>Chaque site connecté à tous les autres</td><td>Très résilient – très coûteux</td></tr>
+  <tr><td>Double résidence (Dual-Homed)</td><td>Deux liaisons vers l'opérateur</td><td>Redondance – plus cher et complexe</td></tr>
+</table>
+
+<h3>1.3 Terminologie WAN essentielle</h3>
+<table>
+  <tr><th>Terme</th><th>Définition</th></tr>
+  <tr><td>CPE</td><td>Équipement côté client (routeur, modem)</td></tr>
+  <tr><td>DCE</td><td>Équipement de communication données (fournit l'horloge)</td></tr>
+  <tr><td>DTE</td><td>Équipement terminal de données (routeur client)</td></tr>
+  <tr><td>Boucle locale</td><td>Câble entre l'abonné et le central téléphonique (CO)</td></tr>
+  <tr><td>CO</td><td>Central téléphonique de l'opérateur</td></tr>
+  <tr><td>Point de démarcation</td><td>Frontière entre équipement client et opérateur</td></tr>
+  <tr><td>CSU/DSU</td><td>Adaptateur numérique entre routeur et ligne WAN</td></tr>
+</table>
+
+<h3>1.4 Commutation de circuits vs Commutation de paquets</h3>
+<table>
+  <tr><th></th><th>Commutation de circuits</th><th>Commutation de paquets</th></tr>
+  <tr><td>Principe</td><td>Circuit dédié (RTPC, RNIS)</td><td>Paquets partagent le réseau (Frame Relay, Internet)</td></tr>
+  <tr><td>Ressources</td><td>Réservées en permanence</td><td>Partagées à la demande</td></tr>
+  <tr><td>Coût</td><td>Élevé</td><td>Moins élevé</td></tr>
+  <tr><td>Latence</td><td>Faible et prévisible</td><td>Variable (gigue)</td></tr>
+</table>
+
+<h3>1.5 Technologies WAN – Vue d'ensemble</h3>
+<table>
+  <tr><th>Technologie</th><th>Type</th><th>Débit indicatif</th><th>Remarques</th></tr>
+  <tr><td>Ligne louée (T1/E1)</td><td>Privé, dédié</td><td>T1 = 1,544 Mbit/s</td><td>Coûteux, fiable</td></tr>
+  <tr><td>RNIS (BRI/PRI)</td><td>Commuté</td><td>BRI : 128 kbit/s</td><td>En déclin</td></tr>
+  <tr><td>Frame Relay</td><td>Privé, NBMA</td><td>Jusqu'à 4 Mbit/s</td><td>DLCI, PVC</td></tr>
+  <tr><td>ATM</td><td>Privé</td><td>Variable</td><td>Cellules 53 octets</td></tr>
+  <tr><td>MPLS</td><td>Privé / Opérateur</td><td>Variable</td><td>Étiquettes, multiprotocole</td></tr>
+  <tr><td>DSL</td><td>Public haut débit</td><td>ADSL : &lt;8 Mbit/s</td><td>Filaire cuivre, DSLAM</td></tr>
+  <tr><td>Câble (HFC)</td><td>Public haut débit</td><td>Variable</td><td>CMTS, partagé</td></tr>
+  <tr><td>Satellite (VSAT)</td><td>Public</td><td>~1-20 Mbit/s</td><td>Zones rurales, latence élevée</td></tr>
+  <tr><td>4G/LTE</td><td>Public sans fil</td><td>Jusqu'à 150 Mbit/s</td><td>Mobile</td></tr>
+  <tr><td>VPN sur Internet</td><td>Public sécurisé</td><td>Selon bande passante</td><td>Chiffrement IPsec/SSL</td></tr>
+</table>
+
+<h3>1.6 DWDM</h3>
+<ul>
+  <li>Multiplie la bande passante sur une seule fibre optique.</li>
+  <li>Supporte plus de 80 canaux × 10 Gbit/s sur un seul brin de fibre.</li>
+  <li>Communication bidirectionnelle sur une seule fibre.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 2 – CONNEXIONS POINT À POINT (HDLC / PPP)</h2>
+
+<h3>2.1 Protocoles d'encapsulation WAN</h3>
+<table>
+  <tr><th>Protocole</th><th>Utilisation</th><th>Notes</th></tr>
+  <tr><td>HDLC</td><td>Défaut Cisco sur liaisons série</td><td>Propriétaire Cisco, entre 2 routeurs Cisco uniquement</td></tr>
+  <tr><td>PPP</td><td>Routeur à routeur, multiconstructeur</td><td>Authentification PAP/CHAP, compression, multiliaison</td></tr>
+  <tr><td>Frame Relay</td><td>NBMA avec DLCI</td><td>Plusieurs circuits virtuels sur une interface</td></tr>
+</table>
+
+<h3>2.2 HDLC – Configuration et vérification</h3>
+<pre>
+! Activer HDLC (encapsulation par défaut Cisco)
+Router(config-if)# encapsulation hdlc
+
+! Vérifier l'interface série
+Router# show interfaces serial 0/0/0
+
+! Vérifier la présence du câble et le rôle DCE/DTE
+Router# show controllers serial 0/0/0
+</pre>
+
+<h4>États de l'interface série</h4>
+<table>
+  <tr><th>Affichage</th><th>Signification</th></tr>
+  <tr><td>Serial is up, line protocol is up</td><td>OK – opérationnel</td></tr>
+  <tr><td>Serial is up, line protocol is down</td><td>Problème couche 2 (encapsulation, horloge)</td></tr>
+  <tr><td>Serial is down, line protocol is down</td><td>Problème physique (câble)</td></tr>
+  <tr><td>Serial is administratively down</td><td>Interface désactivée (shutdown)</td></tr>
+</table>
+
+<h3>2.3 PPP – Architecture</h3>
+<ul>
+  <li><strong>LCP (Link Control Protocol)</strong> : établit, configure et teste la liaison.</li>
+  <li><strong>NCP (Network Control Protocol)</strong> : configure les protocoles de couche réseau (IPCP pour IPv4, IPv6CP pour IPv6).</li>
+  <li>3 phases d'établissement : (1) Établissement liaison, (2) Qualité liaison, (3) Négociation protocoles réseau.</li>
+</ul>
+
+<h3>2.4 PPP – Configuration complète</h3>
+<pre>
+! Étape 1 : Activer l'encapsulation PPP
+Router(config-if)# encapsulation ppp
+
+! Étape 2 : Compression (facultatif)
+Router(config-if)# compress predictor
+
+! Étape 3 : Contrôle qualité de liaison (facultatif)
+Router(config-if)# ppp quality 80
+
+! Étape 4 : Multiliaison PPP
+Router(config)# interface multilink 1
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# ppp multilink
+Router(config-if)# ppp multilink group 1
+
+Router(config)# interface serial 0/0/0
+Router(config-if)# encapsulation ppp
+Router(config-if)# ppp multilink
+Router(config-if)# ppp multilink group 1
+</pre>
+
+<h3>2.5 Authentification PPP</h3>
+
+<h4>PAP (non sécurisé – texte clair)</h4>
+<pre>
+! Sur les DEUX routeurs (R1 et R2) :
+R1(config)# username R2 password cisco123
+R1(config-if)# encapsulation ppp
+R1(config-if)# ppp authentication pap
+R1(config-if)# ppp pap sent-username R1 password cisco123
+
+R2(config)# username R1 password cisco123
+R2(config-if)# encapsulation ppp
+R2(config-if)# ppp authentication pap
+R2(config-if)# ppp pap sent-username R2 password cisco123
+</pre>
+
+<h4>CHAP (sécurisé – hash MD5 – RECOMMANDÉ)</h4>
+<pre>
+! Sur les DEUX routeurs :
+R1(config)# username R2 password cisco123
+R1(config-if)# encapsulation ppp
+R1(config-if)# ppp authentication chap
+
+R2(config)# username R1 password cisco123
+R2(config-if)# encapsulation ppp
+R2(config-if)# ppp authentication chap
+
+! IMPORTANT : les mots de passe doivent être IDENTIQUES sur les deux routeurs
+! Les noms d'hôtes doivent correspondre aux usernames configurés
+</pre>
+
+<div class="tip">
+<strong>Règle clé :</strong> Avec CHAP, le username configuré doit correspondre au hostname du routeur distant. Le mot de passe doit être identique des deux côtés.
+</div>
+
+<h4>Débogage PPP</h4>
+<pre>
+Router# debug ppp authentication
+Router# debug ppp negotiation
+Router# debug ppp error
+! Désactiver le débogage après usage :
+Router# no debug all
+</pre>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 3 – CONNEXIONS DES SUCCURSALES</h2>
+
+<h3>3.1 Technologies haut débit</h3>
+<table>
+  <tr><th>Technologie</th><th>Support</th><th>Partage</th><th>Distance max</th></tr>
+  <tr><td>ADSL</td><td>Paire de cuivre</td><td>Non partagé</td><td>&lt; 5,46 km du CO</td></tr>
+  <tr><td>SDSL</td><td>Paire de cuivre</td><td>Non partagé</td><td>Symétrique up/down</td></tr>
+  <tr><td>Câble (HFC)</td><td>Coaxial + fibre</td><td>Partagé entre abonnés</td><td>—</td></tr>
+  <tr><td>LTE/4G</td><td>Radio</td><td>Partagé</td><td>Rayon de cellule</td></tr>
+  <tr><td>Satellite</td><td>Radio (géosyn.)</td><td>Partagé</td><td>35 786 km altitude</td></tr>
+</table>
+
+<h3>3.2 PPPoE – Configuration</h3>
+<div class="tip">PPPoE crée un tunnel PPP sur Ethernet (MTU = 1492 octets au lieu de 1500).</div>
+<pre>
+! Sur le routeur client :
+
+! 1. Créer l'interface dialer
+interface dialer 1
+ ip address negotiated
+ encapsulation ppp
+ dialer pool 1
+ ip mtu 1492
+ ip tcp adjust-mss 1452
+ ppp chap hostname CLIENT_PPPoE
+ ppp chap password MonMotDePasse
+
+! 2. Activer PPPoE sur l'interface Ethernet physique
+interface GigabitEthernet 0/0
+ pppoe enable
+ pppoe-client dial-pool-number 1
+ no ip address
+ no shutdown
+
+! Vérification
+show ip interface brief
+show interface dialer 1
+show pppoe session
+</pre>
+
+<h3>3.3 VPN – Types</h3>
+<table>
+  <tr><th>Type</th><th>Usage</th><th>Caracteristiques</th></tr>
+  <tr><td>VPN Site à Site</td><td>Réseaux entiers entre succursales</td><td>Toujours actif, géré par passerelle</td></tr>
+  <tr><td>VPN Accès distant</td><td>Télétravailleurs, mobiles</td><td>Logiciel client (Cisco AnyConnect)</td></tr>
+  <tr><td>DMVPN</td><td>Réseau maillé dynamique</td><td>NHRP + mGRE + IPsec</td></tr>
+</table>
+
+<h3>3.4 GRE – Tunnel générique (non sécurisé)</h3>
+<pre>
+! Configuration d'un tunnel GRE entre R1 (10.10.10.1) et R2 (20.20.20.1)
+
+! Sur R1 :
+interface tunnel 0
+ ip address 172.16.1.1 255.255.255.0
+ tunnel source 10.10.10.1
+ tunnel destination 20.20.20.1
+ tunnel mode gre ip
+
+! Sur R2 :
+interface tunnel 0
+ ip address 172.16.1.2 255.255.255.0
+ tunnel source 20.20.20.1
+ tunnel destination 10.10.10.1
+ tunnel mode gre ip
+
+! Vérification
+show ip interface brief
+show interface tunnel 0
+show ip route
+show ip ospf neighbor   (si OSPF sur le tunnel)
+</pre>
+
+<div class="warning"><strong>Important :</strong> GRE n'est pas sécurisé seul. Pour la sécurité, combiner GRE + IPsec.</div>
+
+<h3>3.5 eBGP – Configuration</h3>
+<pre>
+! Utiliser BGP uniquement si connexion à PLUSIEURS FAI (multi-homing)
+! NE PAS utiliser BGP si connexion unique (single-homed)
+
+! Activer BGP avec AS 65000, voisin FAI AS 65001
+Router(config)# router bgp 65000
+Router(config-router)# neighbor 209.165.201.1 remote-as 65001
+Router(config-router)# network 198.133.219.0 mask 255.255.255.0
+
+! Vérification
+show ip bgp
+show ip bgp summary
+show ip route
+</pre>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 4 – LISTES DE CONTRÔLE D'ACCÈS (ACL)</h2>
+
+<h3>4.1 Concepts fondamentaux</h3>
+<ul>
+  <li>Une ACL est une liste séquentielle d'instructions <strong>permit/deny</strong> appelées ACE.</li>
+  <li>Toute ACL se termine par un <strong>deny any implicite</strong> : tout trafic non matché est bloqué.</li>
+  <li>Traitement <strong>séquentiel</strong> : première correspondance trouvée → action appliquée, fin du traitement.</li>
+</ul>
+
+<h4>Règle des 3 × 1</h4>
+<ul>
+  <li><strong>1 protocole</strong> par ACL (IP, IPv6, etc.)</li>
+  <li><strong>1 direction</strong> par ACL (in ou out)</li>
+  <li><strong>1 interface</strong> par ACL</li>
+</ul>
+
+<h3>4.2 Types d'ACL IPv4</h3>
+<table>
+  <tr><th>Type</th><th>Numéros</th><th>Filtre sur</th><th>Placement recommandé</th></tr>
+  <tr><td>Standard</td><td>1–99 et 1300–1999</td><td>Adresse source uniquement</td><td>Plus près de la <strong>DESTINATION</strong></td></tr>
+  <tr><td>Étendue</td><td>100–199 et 2000–2699</td><td>Protocole, source, destination, ports</td><td>Plus près de la <strong>SOURCE</strong></td></tr>
+</table>
+
+<h3>4.3 ACL Standard – Configuration</h3>
+<pre>
+! ACL standard numérotée
+access-list 10 permit 192.168.10.0 0.0.0.255
+access-list 10 deny any
+
+! Appliquer sur une interface
+interface GigabitEthernet 0/1
+ ip access-group 10 out
+
+! ACL standard nommée
+ip access-list standard AUTORISER_LAN
+ remark Autorise le LAN 192.168.10.0/24
+ permit 192.168.10.0 0.0.0.255
+ deny any
+
+! Appliquer la nommée
+interface GigabitEthernet 0/1
+ ip access-group AUTORISER_LAN out
+
+! Modifier une ACL existante (supprimer/ajouter une entrée)
+ip access-list standard AUTORISER_LAN
+ no 10
+ 15 permit host 192.168.10.25
+
+! Supprimer une ACL
+no access-list 10
+
+! Vérification
+show access-lists
+show ip interface GigabitEthernet 0/1
+</pre>
+
+<h3>4.4 ACL Étendue – Configuration</h3>
+<pre>
+! Syntaxe complète
+access-list [100-199] {permit|deny} PROTOCOLE SOURCE WILDCARD
+  [opérateur port] DESTINATION WILDCARD [opérateur port]
+
+! Exemples pratiques :
+
+! Bloquer Telnet (port 23) depuis 192.168.11.0/24 vers n'importe quelle dest.
+access-list 101 deny tcp 192.168.11.0 0.0.0.255 any eq 23
+
+! Autoriser HTTP et HTTPS
+access-list 103 permit tcp 192.168.10.0 0.0.0.255 any eq 80
+access-list 103 permit tcp 192.168.10.0 0.0.0.255 any eq 443
+
+! Autoriser les réponses TCP établies (TCP established)
+access-list 104 permit tcp any 192.168.10.0 0.0.0.255 established
+
+! Bloquer FTP (ports 20 et 21)
+access-list 101 deny tcp 192.168.11.0 0.0.0.255 any eq ftp
+access-list 101 deny tcp 192.168.11.0 0.0.0.255 any eq ftp-data
+access-list 101 permit ip any any
+
+! Appliquer sur interface (côté source = IN sur interface LAN source)
+interface GigabitEthernet 0/1
+ ip access-group 101 in
+
+! ACL étendue nommée
+ip access-list extended FILTRAGE_WEB
+ permit tcp 192.168.10.0 0.0.0.255 any eq 80
+ permit tcp 192.168.10.0 0.0.0.255 any eq 443
+ deny ip any any
+
+! Afficher les noms de ports disponibles
+access-list 101 permit tcp any any eq ?
+</pre>
+
+<h4>Opérateurs de port</h4>
+<table>
+  <tr><th>Opérateur</th><th>Signification</th></tr>
+  <tr><td>eq</td><td>Égal à (equal)</td></tr>
+  <tr><td>neq</td><td>Différent de (not equal)</td></tr>
+  <tr><td>lt</td><td>Inférieur à (less than)</td></tr>
+  <tr><td>gt</td><td>Supérieur à (greater than)</td></tr>
+  <tr><td>range</td><td>Plage de ports</td></tr>
+</table>
+
+<h3>4.5 Ports TCP/UDP courants</h3>
+<table>
+  <tr><th>Service</th><th>Port</th><th>Protocole</th></tr>
+  <tr><td>FTP data</td><td>20</td><td>TCP</td></tr>
+  <tr><td>FTP contrôle</td><td>21</td><td>TCP</td></tr>
+  <tr><td>SSH</td><td>22</td><td>TCP</td></tr>
+  <tr><td>Telnet</td><td>23</td><td>TCP</td></tr>
+  <tr><td>SMTP</td><td>25</td><td>TCP</td></tr>
+  <tr><td>DNS</td><td>53</td><td>UDP/TCP</td></tr>
+  <tr><td>TFTP</td><td>69</td><td>UDP</td></tr>
+  <tr><td>HTTP</td><td>80</td><td>TCP</td></tr>
+  <tr><td>HTTPS</td><td>443</td><td>TCP</td></tr>
+</table>
+
+<h3>4.6 ACL IPv6</h3>
+<pre>
+! Les ACL IPv6 sont TOUJOURS nommées, jamais numérotées
+! Pas de masque wildcard → on utilise le préfixe (ex: /64)
+! La commande d'application est "ipv6 traffic-filter" (pas ip access-group)
+
+! Instructions implicites finales automatiques :
+!   permit icmp any any nd-na
+!   permit icmp any any nd-ns
+!   deny ipv6 any any
+
+! Créer une ACL IPv6
+ipv6 access-list NO-R3-LAN-ACCESS
+ deny ipv6 2001:DB8:CAFE:30::/64 any
+ permit ipv6 any any
+
+! Appliquer sur une interface
+interface GigabitEthernet 0/0
+ ipv6 traffic-filter NO-R3-LAN-ACCESS in
+
+! Sur les lignes VTY (même syntaxe IPv4 et IPv6)
+line vty 0 4
+ access-class NOM-ACL in
+
+! Vérification
+show ipv6 access-list
+show ipv6 interface GigabitEthernet 0/0
+show access-lists
+</pre>
+
+<h3>4.7 Erreurs fréquentes – Dépannage ACL</h3>
+<table>
+  <tr><th>Erreur</th><th>Cause</th><th>Solution</th></tr>
+  <tr><td>Ordre des ACE incorrect</td><td>La règle plus générale est avant la règle spécifique</td><td>Réordonner les ACE</td></tr>
+  <tr><td>TFTP bloqué par ACL TCP</td><td>TFTP utilise UDP, pas TCP</td><td>Remplacer <code>permit tcp</code> par <code>permit ip</code></td></tr>
+  <tr><td>Port source/destination inversé</td><td>eq placé du mauvais côté</td><td>Mettre <code>eq telnet</code> côté destination</td></tr>
+  <tr><td>Mauvaise direction (in/out)</td><td>ACL appliquée en entrée au lieu de sortie</td><td>Changer la direction d'application</td></tr>
+  <tr><td>Mauvais emplacement ACL standard</td><td>ACL standard trop proche de la source</td><td>Déplacer au plus près de la destination</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 5 – SÉCURITÉ ET SURVEILLANCE DU RÉSEAU</h2>
+
+<h3>5.1 Attaques LAN et contre-mesures</h3>
+<table>
+  <tr><th>Attaque</th><th>Mécanisme</th><th>Contre-mesure</th></tr>
+  <tr><td>Reconnaissance CDP</td><td>CDP révèle les infos des équipements</td><td><code>no cdp run</code> / <code>no cdp enable</code></td></tr>
+  <tr><td>Attaque Telnet (brute force)</td><td>Tentatives répétées de mot de passe</td><td>Utiliser SSH, ACL sur vty, TACACS+/RADIUS</td></tr>
+  <tr><td>Inondation MAC (MAC Flooding)</td><td>Saturation table MAC → mode hub</td><td>Port Security</td></tr>
+  <tr><td>Switch Spoofing (VLAN)</td><td>Fausse négociation trunk avec DTP</td><td><code>switchport mode access</code>, <code>switchport nonegotiate</code></td></tr>
+  <tr><td>DHCP Spoofing</td><td>Faux serveur DHCP</td><td>DHCP Snooping</td></tr>
+  <tr><td>DHCP Starvation</td><td>Épuisement des adresses DHCP</td><td>DHCP Snooping + Port Security</td></tr>
+</table>
+
+<h3>5.2 DHCP Snooping</h3>
+<pre>
+! Activer DHCP Snooping globalement
+ip dhcp snooping
+
+! Activer sur un VLAN
+ip dhcp snooping vlan 10
+
+! Définir les ports approuvés (vers serveur DHCP légitime)
+interface GigabitEthernet 0/1
+ ip dhcp snooping trust
+
+! Les ports non approuvés rejettent automatiquement les messages serveur DHCP
+</pre>
+
+<h3>5.3 Sécurité des ports (Port Security)</h3>
+<pre>
+! Activer la sécurité des ports
+interface FastEthernet 0/1
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 2
+ switchport port-security mac-address sticky
+ switchport port-security violation shutdown
+
+! Vérification
+show port-security interface FastEthernet 0/1
+show port-security address
+</pre>
+
+<h3>5.4 AAA et 802.1X</h3>
+<ul>
+  <li><strong>AAA</strong> : Authentication (qui es-tu ?), Authorization (que peux-tu faire ?), Accounting (que fais-tu ?).</li>
+  <li><strong>TACACS+</strong> : Cisco propriétaire, TCP port 49, chiffre tout le paquet.</li>
+  <li><strong>RADIUS</strong> : Standard ouvert, UDP, chiffre uniquement le mot de passe.</li>
+  <li><strong>802.1X</strong> : Supplicant (client) + Authenticator (commutateur) + Serveur d'authentification (RADIUS).</li>
+</ul>
+
+<h3>5.5 SNMP – Configuration</h3>
+
+<h4>SNMPv2c (moins sécurisé)</h4>
+<pre>
+! Configurer la chaîne de communauté en lecture seule
+snmp-server community PUBLIC ro
+
+! Configurer en lecture/écriture
+snmp-server community PRIVATE rw
+
+! Documenter l'emplacement et le contact
+snmp-server location "Salle serveurs Paris"
+snmp-server contact admin@example.com
+
+! Vérification
+show snmp
+show snmp community
+</pre>
+
+<h4>SNMPv3 (recommandé)</h4>
+<pre>
+! 1. Créer une ACL pour autoriser le NMS
+ip access-list standard PERMIT-ADMIN
+ permit 192.168.1.0 0.0.0.255
+
+! 2. Créer une vue SNMP
+snmp-server view SNMP-RO iso included
+
+! 3. Créer un groupe SNMPv3
+snmp-server group SNMP-GROUP v3 priv read SNMP-RO access PERMIT-ADMIN
+
+! 4. Créer un utilisateur
+snmp-server user SNMP-USER SNMP-GROUP v3 auth sha MON_AUTH_PASS priv aes 128 MON_PRIV_PASS
+</pre>
+
+<h4>Composants SNMP</h4>
+<table>
+  <tr><th>Composant</th><th>Rôle</th></tr>
+  <tr><td>Gestionnaire SNMP (NMS)</td><td>Interroge (get) et configure (set) les agents</td></tr>
+  <tr><td>Agent SNMP</td><td>Réside sur l'équipement, répond aux requêtes, envoie des traps</td></tr>
+  <tr><td>MIB</td><td>Base de données des objets gérés (OID)</td></tr>
+  <tr><td>Trap</td><td>Message non sollicité de l'agent vers le NMS</td></tr>
+</table>
+
+<h3>5.6 SPAN (Analyseur de port)</h3>
+<pre>
+! SPAN locale : copier le trafic d'un port source vers un port de destination
+monitor session 1 source interface FastEthernet 0/1 both
+monitor session 1 destination interface FastEthernet 0/24
+
+! Vérification
+show monitor
+
+! Le port de destination n'est plus un port de commutation normal
+! On y branche Wireshark ou un IPS
+</pre>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 6 – QUALITÉ DE SERVICE (QoS)</h2>
+
+<h3>6.1 Concepts clés</h3>
+<table>
+  <tr><th>Paramètre</th><th>Définition</th><th>Impact</th></tr>
+  <tr><td>Bande passante</td><td>Capacité de transmission (bits/s)</td><td>Limite le débit</td></tr>
+  <tr><td>Latence/Délai</td><td>Temps source → destination</td><td>Affecte toutes les apps</td></tr>
+  <tr><td>Gigue (Jitter)</td><td>Variation du délai</td><td>Critique pour voix/vidéo</td></tr>
+  <tr><td>Perte de paquets</td><td>Paquets abandonnés en congestion</td><td>Coupures audio/vidéo</td></tr>
+</table>
+
+<h3>6.2 Exigences réseau par type de trafic</h3>
+<table>
+  <tr><th>Trafic</th><th>Latence max</th><th>Gigue max</th><th>Perte max</th><th>Bande passante min</th></tr>
+  <tr><td>Voix (VoIP)</td><td>150 ms</td><td>30 ms</td><td>1 %</td><td>30 kbit/s</td></tr>
+  <tr><td>Vidéo</td><td>200–400 ms</td><td>30–50 ms</td><td>0,1–1 %</td><td>384 kbit/s – 20 Mbit/s</td></tr>
+  <tr><td>Données (TCP)</td><td>Tolère plus</td><td>—</td><td>TCP retransmet</td><td>Variable</td></tr>
+</table>
+
+<h3>6.3 Algorithmes de file d'attente</h3>
+<table>
+  <tr><th>Algorithme</th><th>Principe</th><th>Usage recommandé</th></tr>
+  <tr><td>FIFO</td><td>Premier arrivé, premier servi</td><td>Liaisons rapides, peu de congestion</td></tr>
+  <tr><td>WFQ</td><td>Allocation équitable pondérée par flux</td><td>Trafic mixte général</td></tr>
+  <tr><td>CBWFQ</td><td>Classes définies par l'utilisateur avec bande passante garantie</td><td>Trafic différencié</td></tr>
+  <tr><td>LLQ</td><td>CBWFQ + priorité stricte pour trafic temps réel</td><td><strong>Voix (VoIP) – RECOMMANDÉ</strong></td></tr>
+</table>
+
+<h3>6.4 Modèles QoS</h3>
+<table>
+  <tr><th>Modèle</th><th>Garantie</th><th>Scalabilité</th><th>Protocole</th></tr>
+  <tr><td>Best Effort</td><td>Aucune</td><td>Très bonne</td><td>—</td></tr>
+  <tr><td>IntServ</td><td>Bout en bout</td><td>Faible</td><td>RSVP</td></tr>
+  <tr><td>DiffServ</td><td>Quasi-garantie</td><td>Bonne</td><td>DSCP, saut par saut</td></tr>
+</table>
+
+<h3>6.5 Marquage QoS</h3>
+<table>
+  <tr><th>Couche</th><th>Champ</th><th>Bits</th><th>Valeurs</th></tr>
+  <tr><td>Couche 2 (Ethernet 802.1Q)</td><td>CoS (802.1p)</td><td>3 bits</td><td>0 (faible) à 7 (haute)</td></tr>
+  <tr><td>Couche 3 (IPv4)</td><td>DSCP (dans champ ToS)</td><td>6 bits</td><td>0–63 (64 valeurs)</td></tr>
+</table>
+
+<h4>Valeurs DSCP importantes</h4>
+<ul>
+  <li><strong>BE (Best Effort)</strong> = DSCP 0 : trafic par défaut</li>
+  <li><strong>EF (Expedited Forwarding)</strong> = DSCP 46 : trafic voix</li>
+  <li><strong>AF (Assured Forwarding)</strong> = AFxy : x = classe (1-4), y = probabilité de perte (1-3)</li>
+</ul>
+
+<h3>6.6 Outils QoS</h3>
+<ul>
+  <li><strong>Classification</strong> : identifier le type de trafic (ACL, NBAR, interface d'entrée).</li>
+  <li><strong>Marquage</strong> : apposer une valeur DSCP/CoS → faire au plus près de la source.</li>
+  <li><strong>WRED</strong> : abandonne progressivement des paquets TCP avant saturation (pas d'effet sur UDP).</li>
+  <li><strong>Traffic Shaping</strong> : lisse le trafic sortant en mettant les excès en file d'attente.</li>
+  <li><strong>Traffic Policing</strong> : supprime ou remarque le trafic entrant en excès (CIR).</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 7 – ÉVOLUTION DU RÉSEAU (IoT, Cloud, SDN)</h2>
+
+<h3>7.1 Internet des Objets (IoT)</h3>
+<p>Les 6 piliers du système Cisco IoT :</p>
+<ol>
+  <li><strong>Connectivité réseau</strong> : infrastructure pour connecter tous les objets.</li>
+  <li><strong>Fog Computing</strong> : traitement distribué en périphérie (vs Cloud centralisé) → résilience + sécurité.</li>
+  <li><strong>Sécurité</strong> : OT security, IoT network security, physical security (caméras IP, FirePOWER).</li>
+  <li><strong>Traitement analytique</strong> : transformation des données en informations exploitables.</li>
+  <li><strong>Gestion et automatisation</strong> : Cisco IoT Field Network Director, Cisco Prime.</li>
+  <li><strong>Plate-forme applicative</strong> : Cisco IOx (IOS + Linux sur routeurs).</li>
+</ol>
+
+<h3>7.2 Cloud Computing</h3>
+<table>
+  <tr><th>Modèle de service</th><th>Description</th></tr>
+  <tr><td>SaaS (Software as a Service)</td><td>Applications via Internet (Gmail, Office 365)</td></tr>
+  <tr><td>PaaS (Platform as a Service)</td><td>Outils de développement d'applications</td></tr>
+  <tr><td>IaaS (Infrastructure as a Service)</td><td>Infrastructure réseau virtualisée</td></tr>
+  <tr><td>ITaaS (IT as a Service)</td><td>Services IT managés par des professionnels</td></tr>
+</table>
+
+<table>
+  <tr><th>Modèle de cloud</th><th>Accès</th><th>Exemple</th></tr>
+  <tr><td>Public</td><td>Grand public</td><td>Amazon AWS, Azure</td></tr>
+  <tr><td>Privé</td><td>Entreprise spécifique</td><td>Cloud interne d'entreprise</td></tr>
+  <tr><td>Hybride</td><td>Mixte public + privé</td><td>Débordement vers le public</td></tr>
+  <tr><td>Communautaire</td><td>Communauté spécifique</td><td>Santé (HIPAA)</td></tr>
+</table>
+
+<h3>7.3 Virtualisation</h3>
+<ul>
+  <li><strong>Hyperviseur Type 1 (bare-metal)</strong> : installé directement sur le matériel (VMware ESXi). Meilleure performance.</li>
+  <li><strong>Hyperviseur Type 2 (hébergé)</strong> : installé sur un OS existant (VirtualBox, VMware Workstation). Pour usage personnel.</li>
+  <li><strong>Cisco UCS</strong> : Unified Computing System → gère des milliers de VMs.</li>
+</ul>
+
+<h3>7.4 SDN (Software-Defined Networking)</h3>
+<table>
+  <tr><th>Plan</th><th>Rôle</th><th>Dans SDN</th></tr>
+  <tr><td>Plan de contrôle</td><td>Décisions de routage (cerveau)</td><td>Déplacé vers le contrôleur SDN centralisé</td></tr>
+  <tr><td>Plan de données</td><td>Transmission des paquets</td><td>Reste sur les équipements</td></tr>
+  <tr><td>Plan de gestion</td><td>Administration SSH/SNMP</td><td>Géré par le contrôleur</td></tr>
+</table>
+
+<ul>
+  <li><strong>API Northbound</strong> : contrôleur ↔ applications en amont.</li>
+  <li><strong>API Southbound (OpenFlow)</strong> : contrôleur ↔ équipements en aval.</li>
+</ul>
+
+<h4>Types de SDN Cisco</h4>
+<ul>
+  <li><strong>SDN basé sur les appareils</strong> : Cisco OnePK.</li>
+  <li><strong>SDN basé sur les contrôleurs</strong> : Cisco Open SDN Controller (OpenDaylight).</li>
+  <li><strong>SDN basé sur les politiques</strong> : Cisco APIC-EM → le plus simple, aucune programmation requise.</li>
+</ul>
+
+<h4>ACI (Application Centric Infrastructure)</h4>
+<ul>
+  <li>3 composants : <strong>ANP</strong> (profil d'applications), <strong>APIC</strong> (contrôleur), <strong>Commutateurs Cisco Nexus 9000</strong>.</li>
+  <li>Topologie <strong>Spine-Leaf</strong> : Leaf = accès, Spine = cœur.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>CHAPITRE 8 – DÉPANNAGE DU RÉSEAU</h2>
+
+<h3>8.1 Méthodologie</h3>
+<p>Le processus de dépannage comporte 3 étapes :</p>
+<ol>
+  <li><strong>Collecter les symptômes</strong> : informations utilisateurs, systèmes de gestion, messages console.</li>
+  <li><strong>Isoler le problème</strong> : éliminer les variables, identifier la couche OSI concernée.</li>
+  <li><strong>Appliquer les mesures correctives</strong> : implémenter, tester, documenter.</li>
+</ol>
+
+<h3>8.2 Méthodes d'approche</h3>
+<table>
+  <tr><th>Méthode</th><th>Direction</th><th>Quand l'utiliser</th></tr>
+  <tr><td>Bottom-Up (ascendante)</td><td>Couche 1 → 7</td><td>Problème physique suspecté</td></tr>
+  <tr><td>Top-Down (descendante)</td><td>Couche 7 → 1</td><td>Problème applicatif</td></tr>
+  <tr><td>Divide &amp; Conquer</td><td>Couche choisie, tests dans les deux sens</td><td>Problème identifié à une couche spécifique</td></tr>
+</table>
+
+<h3>8.3 Symptômes par couche OSI</h3>
+<table>
+  <tr><th>Couche</th><th>Symptômes courants</th><th>Problèmes typiques</th></tr>
+  <tr><td>1 – Physique</td><td>Pas de connectivité, faible débit</td><td>Câble défectueux, problème d'alimentation, bruit</td></tr>
+  <tr><td>2 – Liaison</td><td>"line protocol down", diffusions excessives</td><td>Mauvaise encapsulation, erreurs STP, conflit duplex</td></tr>
+  <tr><td>3 – Réseau</td><td>Panne réseau, performances non optimales</td><td>Mauvaise table de routage, problèmes de voisinage</td></tr>
+  <tr><td>4 – Transport</td><td>Applications inaccessibles</td><td>ACL mal configurée, NAT incorrect</td></tr>
+  <tr><td>7 – Application</td><td>Service inaccessible malgré connectivité</td><td>DNS, protocole applicatif mal configuré</td></tr>
+</table>
+
+<h3>8.4 IP SLA – Surveillance</h3>
+<pre>
+! Vérifier le support IP SLA
+show ip sla application
+
+! Créer une opération ICMP Echo (surveillance vers 10.0.0.1)
+ip sla 1
+ icmp-echo 10.0.0.1 source-ip 192.168.1.1
+ frequency 30
+
+! Planifier (démarrage immédiat, durée illimitée)
+ip sla schedule 1 start-time now life forever
+
+! Vérification
+show ip sla configuration 1
+show ip sla statistics 1
+</pre>
+
+<h3>8.5 Commandes de dépannage bout en bout</h3>
+<pre>
+! Étape 1 : Vérification physique
+show interfaces
+show processes cpu
+show memory
+
+! Étape 2 : Duplex (conflit full/half duplex)
+show interfaces GigabitEthernet 0/0
+! Corriger si nécessaire :
+interface GigabitEthernet 0/0
+ duplex full
+ speed 1000
+
+! Étape 3 : ARP et table MAC
+show mac address-table
+show arp
+! Sur Windows : arp -d (vider cache ARP)
+
+! Étape 4 : Table de routage
+show ip route
+show ipv6 route
+
+! Étape 5 : Test connectivité
+ping 192.168.10.1
+traceroute 192.168.10.1
+! Test connectivité couche transport (port 80)
+telnet 10.0.0.1 80
+
+! Étape 6 : Vérifier les ACL
+show ip access-lists
+show ip interface GigabitEthernet 0/0
+
+! Étape 7 : DNS
+Router(config)# ip host SERVEUR1 10.0.0.10
+
+! Documentation réseau
+show cdp neighbors detail
+show ip ospf neighbor
+show bgp summary
+</pre>
+
+<h3>8.6 Outils de dépannage</h3>
+<ul>
+  <li><strong>Wireshark</strong> : analyseur de paquets (avec SPAN).</li>
+  <li><strong>Syslog</strong> : centralise les logs des équipements réseau.</li>
+  <li><strong>SNMP NMS</strong> : surveillance réseau (SolarWinds, etc.).</li>
+  <li><strong>TDR</strong> : testeur de câbles, détecte les cassures.</li>
+  <li><strong>Cisco NAM</strong> : Network Analysis Module, capture et analyse le trafic.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>TABLEAU RÉCAPITULATIF DES COMMANDES CISCO</h2>
+
+<h3>Commandes essentielles – Référence rapide</h3>
+<table>
+  <tr><th>Commande</th><th>Utilisation</th></tr>
+  <tr><td><code>encapsulation hdlc</code></td><td>Encapsulation HDLC (défaut Cisco)</td></tr>
+  <tr><td><code>encapsulation ppp</code></td><td>Encapsulation PPP</td></tr>
+  <tr><td><code>ppp authentication chap</code></td><td>Activer l'authentification CHAP</td></tr>
+  <tr><td><code>ppp authentication pap</code></td><td>Activer l'authentification PAP</td></tr>
+  <tr><td><code>debug ppp authentication</code></td><td>Déboguer l'authentification PPP</td></tr>
+  <tr><td><code>show interfaces serial 0/0/0</code></td><td>État de l'interface série</td></tr>
+  <tr><td><code>show controllers serial 0/0/0</code></td><td>DCE/DTE et présence du câble</td></tr>
+  <tr><td><code>show pppoe session</code></td><td>Sessions PPPoE actives</td></tr>
+  <tr><td><code>show interface tunnel 0</code></td><td>État du tunnel GRE</td></tr>
+  <tr><td><code>show ip bgp</code></td><td>Table BGP</td></tr>
+  <tr><td><code>show ip bgp summary</code></td><td>Résumé des voisins BGP</td></tr>
+  <tr><td><code>access-list 10 permit ...</code></td><td>ACL standard numérotée</td></tr>
+  <tr><td><code>access-list 101 permit tcp ...</code></td><td>ACL étendue numérotée</td></tr>
+  <tr><td><code>ip access-group 10 in</code></td><td>Appliquer ACL IPv4 sur interface</td></tr>
+  <tr><td><code>ipv6 traffic-filter NOM in</code></td><td>Appliquer ACL IPv6 sur interface</td></tr>
+  <tr><td><code>show access-lists</code></td><td>Afficher toutes les ACL</td></tr>
+  <tr><td><code>no cdp run</code></td><td>Désactiver CDP globalement</td></tr>
+  <tr><td><code>ip dhcp snooping</code></td><td>Activer DHCP Snooping</td></tr>
+  <tr><td><code>snmp-server community PUBLIC ro</code></td><td>Configurer SNMP v2c</td></tr>
+  <tr><td><code>show snmp</code></td><td>Vérifier SNMP</td></tr>
+  <tr><td><code>monitor session 1 source ...</code></td><td>Configurer SPAN</td></tr>
+  <tr><td><code>show monitor</code></td><td>Vérifier SPAN</td></tr>
+  <tr><td><code>ip sla 1</code></td><td>Créer opération IP SLA</td></tr>
+  <tr><td><code>show ip sla statistics</code></td><td>Statistiques IP SLA</td></tr>
+  <tr><td><code>ping</code> / <code>traceroute</code></td><td>Test de connectivité</td></tr>
+  <tr><td><code>show ip route</code></td><td>Table de routage IPv4</td></tr>
+  <tr><td><code>show ipv6 route</code></td><td>Table de routage IPv6</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>ÉVALUATION THÉORIQUE</h2>
+
+<div class="eval-box">
+<h3>PARTIE A – QCM (Questions à Choix Multiples)</h3>
+
+<div class="qcm">
+<p>Q1. Quelle technologie WAN utilise des cellules de 53 octets ?</p>
+<ul>
+  <li>a) Frame Relay</li>
+  <li>b) MPLS</li>
+  <li><strong class="answer">c) ATM ✓</strong></li>
+  <li>d) HDLC</li>
+</ul>
+
+<p>Q2. Quel protocole PPP est le plus sécurisé pour l'authentification ?</p>
+<ul>
+  <li>a) PAP</li>
+  <li><strong class="answer">b) CHAP ✓</strong></li>
+  <li>c) LDAP</li>
+  <li>d) TACACS</li>
+</ul>
+
+<p>Q3. Quelle est la MTU d'une interface PPPoE ?</p>
+<ul>
+  <li>a) 1500 octets</li>
+  <li><strong class="answer">b) 1492 octets ✓</strong></li>
+  <li>c) 1480 octets</li>
+  <li>d) 576 octets</li>
+</ul>
+
+<p>Q4. Où doit être placée une ACL standard ?</p>
+<ul>
+  <li>a) Le plus près possible de la source</li>
+  <li><strong class="answer">b) Le plus près possible de la destination ✓</strong></li>
+  <li>c) Au centre du réseau</li>
+  <li>d) Sur le routeur de périphérie</li>
+</ul>
+
+<p>Q5. Quel masque wildcard correspond au réseau 192.168.10.0/24 ?</p>
+<ul>
+  <li>a) 255.255.255.0</li>
+  <li><strong class="answer">b) 0.0.0.255 ✓</strong></li>
+  <li>c) 0.0.255.255</li>
+  <li>d) 255.0.0.0</li>
+</ul>
+
+<p>Q6. Quel protocole BGP s'applique entre deux AS différents ?</p>
+<ul>
+  <li>a) iBGP</li>
+  <li><strong class="answer">b) eBGP ✓</strong></li>
+  <li>c) OSPF externe</li>
+  <li>d) EIGRP externe</li>
+</ul>
+
+<p>Q7. Quelle version de SNMP offre l'authentification ET le chiffrement ?</p>
+<ul>
+  <li>a) SNMPv1</li>
+  <li>b) SNMPv2c</li>
+  <li><strong class="answer">c) SNMPv3 ✓</strong></li>
+  <li>d) SNMPv4</li>
+</ul>
+
+<p>Q8. Quelle valeur DSCP est recommandée pour le trafic voix (VoIP) ?</p>
+<ul>
+  <li>a) DSCP 0 (BE)</li>
+  <li>b) DSCP 10 (AF11)</li>
+  <li><strong class="answer">c) DSCP 46 (EF) ✓</strong></li>
+  <li>d) DSCP 48 (CS6)</li>
+</ul>
+
+<p>Q9. Quel algorithme de file d'attente est recommandé pour la voix sur IP ?</p>
+<ul>
+  <li>a) FIFO</li>
+  <li>b) WFQ</li>
+  <li>c) CBWFQ</li>
+  <li><strong class="answer">d) LLQ ✓</strong></li>
+</ul>
+
+<p>Q10. Dans l'architecture SDN, quel protocole est utilisé comme API Southbound ?</p>
+<ul>
+  <li>a) SNMP</li>
+  <li><strong class="answer">b) OpenFlow ✓</strong></li>
+  <li>c) NETCONF</li>
+  <li>d) REST</li>
+</ul>
+
+<p>Q11. Quelle attaque exploite le protocole DTP pour accéder à tous les VLANs ?</p>
+<ul>
+  <li>a) DHCP Starvation</li>
+  <li><strong class="answer">b) Switch Spoofing ✓</strong></li>
+  <li>c) MAC Flooding</li>
+  <li>d) ARP Poisoning</li>
+</ul>
+
+<p>Q12. Quelle commande IP SLA crée une opération numéro 5 ?</p>
+<ul>
+  <li>a) <code>ip sla monitor 5</code></li>
+  <li><strong class="answer">b) <code>ip sla 5</code> ✓</strong></li>
+  <li>c) <code>ip sla create 5</code></li>
+  <li>d) <code>sla operation 5</code></li>
+</ul>
+
+<p>Q13. Quelle instruction est implicitement ajoutée à la fin de toute ACL IPv4 ?</p>
+<ul>
+  <li>a) permit any any</li>
+  <li><strong class="answer">b) deny any ✓</strong></li>
+  <li>c) deny ip any any log</li>
+  <li>d) permit ip any any</li>
+</ul>
+
+<p>Q14. Dans le modèle IoT Cisco, quel pilier traite les données localement pour éviter leur transport vers le cloud ?</p>
+<ul>
+  <li>a) Cloud Computing</li>
+  <li><strong class="answer">b) Fog Computing ✓</strong></li>
+  <li>c) Edge Computing centralisé</li>
+  <li>d) SDN</li>
+</ul>
+
+<p>Q15. Quel numéro de protocole IP identifie GRE dans l'en-tête IP externe ?</p>
+<ul>
+  <li>a) 17</li>
+  <li>b) 6</li>
+  <li><strong class="answer">c) 47 ✓</strong></li>
+  <li>d) 89</li>
+</ul>
+</div>
+
+<h3>PARTIE B – Questions ouvertes</h3>
+
+<p><strong>Q16.</strong> Expliquez la différence entre PAP et CHAP dans l'authentification PPP. Lequel recommandez-vous et pourquoi ?</p>
+<div class="tip">
+<strong>Réponse :</strong> PAP envoie le nom d'utilisateur et le mot de passe en texte clair (non chiffré) → vulnérable aux écoutes. CHAP utilise un échange en 3 étapes avec un hash MD5 d'un secret partagé → jamais le mot de passe n'est transmis. CHAP est recommandé car plus sécurisé. CHAP effectue également des vérifications périodiques pendant la session.
+</div>
+
+<p><strong>Q17.</strong> Vous configurez une ACL pour bloquer le trafic Telnet depuis le réseau 10.1.1.0/24 vers le serveur 172.16.0.1. Écrivez la commande ACL et précisez où l'appliquer.</p>
+<div class="tip">
+<strong>Réponse :</strong><br/>
+<code>access-list 101 deny tcp 10.1.1.0 0.0.0.255 host 172.16.0.1 eq 23</code><br/>
+<code>access-list 101 permit ip any any</code><br/>
+Appliquer sur l'interface du routeur la plus proche du réseau 10.1.1.0/24, en direction <strong>IN</strong> (entrante depuis le réseau source) — car c'est une ACL étendue → proche de la source.
+</div>
+
+<p><strong>Q18.</strong> Expliquez ce qu'est un tunnel GRE et ses limitations.</p>
+<div class="tip">
+<strong>Réponse :</strong> GRE (Generic Routing Encapsulation) crée un tunnel virtuel point à point entre deux routeurs. Il encapsule n'importe quel protocole couche 3 (IPv4, IPv6, multicast) dans des paquets IP. Limitations : pas de chiffrement natif (pas sécurisé seul), stateless, surcharge minimale de 24 octets. Pour la sécurité, il faut combiner GRE + IPsec.
+</div>
+
+<p><strong>Q19.</strong> Quelle est la différence entre IntServ et DiffServ ? Lequel est plus utilisé en pratique ?</p>
+<div class="tip">
+<strong>Réponse :</strong> IntServ offre une QoS de bout en bout garantie avec réservation de ressources via RSVP, mais est peu évolutif (chaque flux doit être signalé). DiffServ classe le trafic en groupes et applique des politiques saut par saut, plus évolutif. DiffServ est plus utilisé en pratique car il s'adapte aux grands réseaux.
+</div>
+
+<p><strong>Q20.</strong> Qu'est-ce que le DHCP Snooping et comment protège-t-il le réseau ?</p>
+<div class="tip">
+<strong>Réponse :</strong> Le DHCP Snooping est une fonctionnalité de commutateur qui distingue les ports approuvés (trusted, vers serveurs DHCP légitimes) et non approuvés (untrusted, vers clients). Les ports non approuvés rejettent tout message serveur DHCP, empêchant un faux serveur DHCP de distribuer de fausses configurations (DHCP Spoofing). Il limite aussi le débit des requêtes pour prévenir le DHCP Starvation.
+</div>
+</div>
+
+<!-- ============================================================ -->
+<h2>ÉVALUATION PRATIQUE – SCÉNARIOS CISCO</h2>
+
+<div class="eval-box">
+<h3>SCÉNARIO 1 – Configuration PPP avec CHAP</h3>
+<p><strong>Topologie :</strong> R1 (S0/0/0) ←→ (S0/0/0) R2</p>
+<p><strong>Mission :</strong> Configurer PPP avec authentification CHAP bidirectionnelle. Adresses : R1 S0/0/0 = 192.168.12.1/30, R2 S0/0/0 = 192.168.12.2/30.</p>
+
+<pre>
+! ===== SUR R1 =====
+R1(config)# hostname R1
+R1(config)# username R2 password Cisco123
+R1(config)# interface serial 0/0/0
+R1(config-if)# ip address 192.168.12.1 255.255.255.252
+R1(config-if)# encapsulation ppp
+R1(config-if)# ppp authentication chap
+R1(config-if)# clock rate 64000          ! uniquement si R1 est DCE
+R1(config-if)# no shutdown
+
+! ===== SUR R2 =====
+R2(config)# hostname R2
+R2(config)# username R1 password Cisco123
+R2(config)# interface serial 0/0/0
+R2(config-if)# ip address 192.168.12.2 255.255.255.252
+R2(config-if)# encapsulation ppp
+R2(config-if)# ppp authentication chap
+R2(config-if)# no shutdown
+
+! ===== VÉRIFICATION =====
+R1# show interfaces serial 0/0/0
+! Résultat attendu : "Serial0/0/0 is up, line protocol is up"
+! "Encapsulation PPP"
+
+R1# debug ppp authentication
+! Résultat attendu : succès de l'authentification CHAP (code 3 = success)
+</pre>
+
+<h3>SCÉNARIO 2 – ACL pour sécuriser l'accès réseau</h3>
+<p><strong>Topologie :</strong> LAN_A (192.168.1.0/24) ← R1 → R2 → Serveur (10.0.0.10)</p>
+<p><strong>Mission :</strong></p>
+<ol>
+  <li>Autoriser HTTP et HTTPS depuis LAN_A vers le serveur.</li>
+  <li>Bloquer Telnet depuis LAN_A vers le serveur.</li>
+  <li>Autoriser tout autre trafic.</li>
+  <li>Appliquer sur la bonne interface et direction.</li>
+</ol>
+
+<pre>
+! ===== SUR R1 =====
+! Créer l'ACL étendue nommée (proche de la SOURCE)
+R1(config)# ip access-list extended FILTRE_LAN_A
+R1(config-ext-nacl)# remark Autorise HTTP
+R1(config-ext-nacl)# permit tcp 192.168.1.0 0.0.0.255 host 10.0.0.10 eq 80
+R1(config-ext-nacl)# remark Autorise HTTPS
+R1(config-ext-nacl)# permit tcp 192.168.1.0 0.0.0.255 host 10.0.0.10 eq 443
+R1(config-ext-nacl)# remark Bloque Telnet
+R1(config-ext-nacl)# deny tcp 192.168.1.0 0.0.0.255 host 10.0.0.10 eq 23
+R1(config-ext-nacl)# remark Autorise le reste
+R1(config-ext-nacl)# permit ip any any
+R1(config-ext-nacl)# exit
+
+! Appliquer sur l'interface côté LAN_A (interface G0/0 de R1), direction IN
+R1(config)# interface GigabitEthernet 0/0
+R1(config-if)# ip access-group FILTRE_LAN_A in
+
+! ===== VÉRIFICATION =====
+R1# show access-lists FILTRE_LAN_A
+R1# show ip interface GigabitEthernet 0/0
+! Test : depuis PC du LAN_A
+! ping 10.0.0.10           → doit réussir
+! telnet 10.0.0.10 23      → doit échouer (bloqué)
+! telnet 10.0.0.10 80      → doit réussir
+</pre>
+
+<h3>SCÉNARIO 3 – Tunnel GRE entre deux sites</h3>
+<p><strong>Topologie :</strong> Site_A (R1: WAN=203.0.113.1) ←Internet→ Site_B (R2: WAN=198.51.100.1)</p>
+<p><strong>Mission :</strong> Créer un tunnel GRE pour connecter 10.1.0.0/24 (Site A) et 10.2.0.0/24 (Site B).</p>
+
+<pre>
+! ===== SUR R1 =====
+R1(config)# interface tunnel 0
+R1(config-if)# ip address 172.16.0.1 255.255.255.252
+R1(config-if)# tunnel source 203.0.113.1
+R1(config-if)# tunnel destination 198.51.100.1
+R1(config-if)# tunnel mode gre ip
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+! Route statique vers le réseau distant via le tunnel
+R1(config)# ip route 10.2.0.0 255.255.255.0 172.16.0.2
+
+! ===== SUR R2 =====
+R2(config)# interface tunnel 0
+R2(config-if)# ip address 172.16.0.2 255.255.255.252
+R2(config-if)# tunnel source 198.51.100.1
+R2(config-if)# tunnel destination 203.0.113.1
+R2(config-if)# tunnel mode gre ip
+R2(config-if)# no shutdown
+R2(config-if)# exit
+
+R2(config)# ip route 10.1.0.0 255.255.255.0 172.16.0.1
+
+! ===== VÉRIFICATION =====
+R1# show interface tunnel 0
+R1# show ip route
+R1# ping 172.16.0.2           ! Ping vers l'autre extrémité du tunnel
+R1# ping 10.2.0.1             ! Ping vers le réseau distant
+</pre>
+
+<h3>SCÉNARIO 4 – Configuration SNMP et SPAN</h3>
+<p><strong>Mission :</strong> Configurer SNMPv2c et une session SPAN sur un commutateur Cisco Catalyst.</p>
+
+<pre>
+! ===== SNMP sur le commutateur =====
+SW1(config)# snmp-server community MONITOR ro
+SW1(config)# snmp-server location "Datacenter Salle 1"
+SW1(config)# snmp-server contact it-admin@entreprise.com
+SW1(config)# snmp-server host 192.168.1.100 version 2c MONITOR
+
+! ===== SPAN : surveiller le port Fa0/1 depuis Fa0/24 =====
+SW1(config)# monitor session 1 source interface FastEthernet 0/1 both
+SW1(config)# monitor session 1 destination interface FastEthernet 0/24
+
+! ===== VÉRIFICATION =====
+SW1# show snmp
+SW1# show snmp community
+SW1# show monitor
+</pre>
+
+<h3>SCÉNARIO 5 – ACL IPv6</h3>
+<p><strong>Mission :</strong> Bloquer le trafic IPv6 du réseau 2001:DB8:A::/64 vers 2001:DB8:B::/64, autoriser le reste.</p>
+
+<pre>
+! ===== SUR R1 =====
+R1(config)# ipv6 access-list BLOQUER-A-VERS-B
+R1(config-ipv6-acl)# deny ipv6 2001:DB8:A::/64 2001:DB8:B::/64
+R1(config-ipv6-acl)# permit ipv6 any any
+R1(config-ipv6-acl)# exit
+
+! Appliquer sur l'interface côté réseau A (direction IN)
+R1(config)# interface GigabitEthernet 0/0
+R1(config-if)# ipv6 traffic-filter BLOQUER-A-VERS-B in
+
+! ===== VÉRIFICATION =====
+R1# show ipv6 access-list
+R1# show ipv6 interface GigabitEthernet 0/0
+</pre>
+
+<h3>SCÉNARIO 6 – IP SLA pour surveiller une liaison</h3>
+<p><strong>Mission :</strong> Surveiller la disponibilité du serveur 10.0.0.100 toutes les 30 secondes depuis R1.</p>
+
+<pre>
+! ===== SUR R1 =====
+R1(config)# ip sla 1
+R1(config-ip-sla)# icmp-echo 10.0.0.100 source-ip 192.168.1.1
+R1(config-ip-sla)# frequency 30
+R1(config-ip-sla)# exit
+
+R1(config)# ip sla schedule 1 start-time now life forever
+
+! ===== VÉRIFICATION =====
+R1# show ip sla configuration 1
+R1# show ip sla statistics 1
+! Observer : Success/Failure ratio, RTT (temps de réponse)
+</pre>
+</div>
+
+<!-- ============================================================ -->
+<h2>AIDE-MÉMOIRE – MASQUES WILDCARD</h2>
+<table>
+  <tr><th>Réseau CIDR</th><th>Masque de sous-réseau</th><th>Masque Wildcard</th><th>Dans les ACL</th></tr>
+  <tr><td>/8</td><td>255.0.0.0</td><td>0.255.255.255</td><td><code>10.0.0.0 0.255.255.255</code></td></tr>
+  <tr><td>/16</td><td>255.255.0.0</td><td>0.0.255.255</td><td><code>172.16.0.0 0.0.255.255</code></td></tr>
+  <tr><td>/24</td><td>255.255.255.0</td><td>0.0.0.255</td><td><code>192.168.1.0 0.0.0.255</code></td></tr>
+  <tr><td>/25</td><td>255.255.255.128</td><td>0.0.0.127</td><td><code>192.168.1.0 0.0.0.127</code></td></tr>
+  <tr><td>/26</td><td>255.255.255.192</td><td>0.0.0.63</td><td><code>192.168.1.0 0.0.0.63</code></td></tr>
+  <tr><td>/30</td><td>255.255.255.252</td><td>0.0.0.3</td><td><code>192.168.1.0 0.0.0.3</code></td></tr>
+  <tr><td>Hôte unique</td><td>255.255.255.255</td><td>0.0.0.0</td><td><code>host 192.168.1.1</code></td></tr>
+  <tr><td>Tout trafic</td><td>0.0.0.0</td><td>255.255.255.255</td><td><code>any</code></td></tr>
+</table>
+
+<h2>GLOSSAIRE COMPLET</h2>
+<table>
+  <tr><th>Terme</th><th>Définition</th></tr>
+  <tr><td>ACL</td><td>Access Control List – liste de règles permit/deny</td></tr>
+  <tr><td>ACE</td><td>Access Control Entry – entrée individuelle d'une ACL</td></tr>
+  <tr><td>ADSL</td><td>Asymmetric DSL – débit download &gt; upload</td></tr>
+  <tr><td>AnyConnect</td><td>Client VPN Cisco pour accès distant</td></tr>
+  <tr><td>ATM</td><td>Asynchronous Transfer Mode – cellules 53 octets</td></tr>
+  <tr><td>BGP</td><td>Border Gateway Protocol – routage entre AS</td></tr>
+  <tr><td>CBWFQ</td><td>Class-Based Weighted Fair Queuing – QoS par classes</td></tr>
+  <tr><td>CHAP</td><td>Challenge Handshake Auth. Protocol – hash MD5</td></tr>
+  <tr><td>CMTS</td><td>Cable Modem Termination System – tête de réseau câble</td></tr>
+  <tr><td>CoS</td><td>Class of Service – marquage couche 2, 3 bits</td></tr>
+  <tr><td>CPE</td><td>Customer Premises Equipment – équipement client</td></tr>
+  <tr><td>DCE</td><td>Data Communications Equipment – fournit l'horloge</td></tr>
+  <tr><td>DLCI</td><td>Data Link Connection Identifier – Frame Relay</td></tr>
+  <tr><td>DMVPN</td><td>Dynamic Multipoint VPN – NHRP + mGRE + IPsec</td></tr>
+  <tr><td>DSCP</td><td>Differentiated Services Code Point – 6 bits QoS IPv4/IPv6</td></tr>
+  <tr><td>DSLAM</td><td>DSL Access Multiplexer – multiplexeur central téléphonique</td></tr>
+  <tr><td>DTE</td><td>Data Terminal Equipment – équipement terminal</td></tr>
+  <tr><td>DWDM</td><td>Dense Wavelength Division Multiplexing – multiplexage fibre</td></tr>
+  <tr><td>eBGP</td><td>External BGP – entre deux AS différents</td></tr>
+  <tr><td>EF</td><td>Expedited Forwarding – DSCP 46, pour la voix</td></tr>
+  <tr><td>GRE</td><td>Generic Routing Encapsulation – tunnel non sécurisé</td></tr>
+  <tr><td>HDLC</td><td>High-Level Data Link Control – encapsulation série Cisco</td></tr>
+  <tr><td>HFC</td><td>Hybrid Fiber-Coaxial – réseau câble</td></tr>
+  <tr><td>iBGP</td><td>Internal BGP – au sein d'un même AS</td></tr>
+  <tr><td>IaaS</td><td>Infrastructure as a Service – cloud</td></tr>
+  <tr><td>IoT</td><td>Internet of Things – Internet des objets</td></tr>
+  <tr><td>IPCP</td><td>IP Control Protocol – NCP pour IPv4 dans PPP</td></tr>
+  <tr><td>IPsec</td><td>IP Security – protocole de chiffrement VPN</td></tr>
+  <tr><td>LCP</td><td>Link Control Protocol – établit la liaison PPP</td></tr>
+  <tr><td>LLQ</td><td>Low Latency Queuing – priorité stricte pour la voix</td></tr>
+  <tr><td>MPLS</td><td>Multiprotocol Label Switching – étiquettes WAN</td></tr>
+  <tr><td>MTU</td><td>Maximum Transmission Unit – taille max de trame</td></tr>
+  <tr><td>NCP</td><td>Network Control Protocol – configure les protocoles réseau dans PPP</td></tr>
+  <tr><td>NHRP</td><td>Next Hop Resolution Protocol – utilisé par DMVPN</td></tr>
+  <tr><td>PAP</td><td>Password Authentication Protocol – texte clair, non sécurisé</td></tr>
+  <tr><td>PPP</td><td>Point-to-Point Protocol – encapsulation multiconstructeur</td></tr>
+  <tr><td>PPPoE</td><td>PPP over Ethernet – tunnel PPP sur Ethernet, MTU 1492</td></tr>
+  <tr><td>RADIUS</td><td>Remote Auth. Dial-In User Service – AAA standard, UDP</td></tr>
+  <tr><td>RSVP</td><td>Resource Reservation Protocol – utilisé par IntServ</td></tr>
+  <tr><td>SDN</td><td>Software-Defined Networking – plan de contrôle centralisé</td></tr>
+  <tr><td>SNMP</td><td>Simple Network Management Protocol – surveillance réseau</td></tr>
+  <tr><td>SONET</td><td>Synchronous Optical Networking – fibre optique</td></tr>
+  <tr><td>SPAN</td><td>Switched Port Analyzer – mise en miroir de ports</td></tr>
+  <tr><td>SaaS</td><td>Software as a Service – applications cloud</td></tr>
+  <tr><td>TACACS+</td><td>Terminal Access Controller Access Control – AAA Cisco, TCP 49</td></tr>
+  <tr><td>VPN</td><td>Virtual Private Network – réseau privé sur réseau public</td></tr>
+  <tr><td>VSAT</td><td>Very Small Aperture Terminal – satellite</td></tr>
+  <tr><td>WRED</td><td>Weighted Random Early Detection – prévention congestion TCP</td></tr>
+  <tr><td>WFQ</td><td>Weighted Fair Queuing – allocation équitable par flux</td></tr>
+  <tr><td>802.1Q</td><td>Standard IEEE d'étiquetage VLAN + CoS (802.1p)</td></tr>
+  <tr><td>802.1X</td><td>Standard IEEE de contrôle d'accès basé sur les ports</td></tr>
+</table>
+
+<p style="text-align:center; margin-top:30px; color:#555; font-size:10pt;">
+  Document préparé à partir des cours CCNA Routing &amp; Switching – Connecting Networks v6.0 | Chapitres 1 à 8
+</p>
+
+</body>
+</html>
